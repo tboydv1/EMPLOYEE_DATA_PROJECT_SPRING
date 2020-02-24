@@ -15,6 +15,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -26,14 +29,18 @@ import com.employee.entity.Employee;
  *
  */
 
-@Sql(scripts= {"classpath:/db/create-table.sql"})
+
+@Sql(scripts= {"classpath:/db/create-table.sql", "classpath:/db/insert-employees.sql"})
 @ContextConfiguration("classpath:data-context.xml")
 @RunWith(SpringRunner.class)
 public class EmployeeDaoImplTest {
-
+	
 	
 	@Autowired
-	EmployeeDao employeeDaoImpl;
+	private Environment env;
+	
+	@Autowired
+	private EmployeeDao employeeDaoImpl;
 	
 	
 	/**
@@ -53,10 +60,14 @@ public class EmployeeDaoImplTest {
 	@Test
 	public void dbConnectionTest() throws SQLException {
 		
-		String jdbcUrl = "jdbc:mysql://localhost:3306/employee_db?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true";
-		String user = "employee_user";
-		String password = "employee123";
-		String driver = "com.mysql.cj.jdbc.Driver";
+		assertThat(env).isNotNull();
+		
+		String jdbcUrl = env.getProperty("test.jdbcUrl");
+		String user = env.getProperty("test.user");
+		String password = env.getProperty("test.password");
+		String driver = env.getProperty("test.driver");
+		
+		System.out.println(jdbcUrl +" "+user+" "+password);
 		
 		Connection dbCon = null;
 		
@@ -96,9 +107,22 @@ public class EmployeeDaoImplTest {
 		
 		Employee existingEmployee = employeeDaoImpl.getById(id);
 		assertThat(existingEmployee).isNotNull();
+	
 		
+	}
+	
+	@Test
+	public void getEmployeeByEmailTest() {
 		
+		assertThat(employeeDaoImpl).isNotNull();
 		
+		Employee savedEmployee = employeeDaoImpl.getByEmail("ray@mail.com");
+		
+		assertThat(savedEmployee).isNotNull();
+		
+		assertThat(savedEmployee.getEmployeeId()).isEqualTo(4);
+		
+		System.out.println(savedEmployee);
 		
 	}
 

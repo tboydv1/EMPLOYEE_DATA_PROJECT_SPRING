@@ -9,6 +9,7 @@
   
   <modules>
   	<module>employee_data</module>
+  	<module>employee_service</module>
   </modules>
   
   <dependencies>
@@ -43,13 +44,14 @@
     <scope>test</scope>
 </dependency>
 
+<!-- https://mvnrepository.com/artifact/org.assertj/assertj-core -->
 <dependency>
-  <groupId>org.assertj</groupId>
-  <artifactId>assertj-core</artifactId>
-  <!-- use 2.9.1 for Java 7 projects -->
-  <version>3.11.1</version>
-  <scope>test</scope>
+    <groupId>org.assertj</groupId>
+    <artifactId>assertj-core</artifactId>
+    <version>3.15.0</version>
+    <scope>test</scope>
 </dependency>
+
 
   	
 
