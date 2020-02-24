@@ -57,34 +57,7 @@ public class EmployeeDaoImplTest {
 	public void tearDown() throws Exception {
 	}
 
-	@Test
-	public void dbConnectionTest() throws SQLException {
-		
-		assertThat(env).isNotNull();
-		
-		String jdbcUrl = env.getProperty("test.jdbcUrl");
-		String user = env.getProperty("test.user");
-		String password = env.getProperty("test.password");
-		String driver = env.getProperty("test.driver");
-		
-		System.out.println(jdbcUrl +" "+user+" "+password);
-		
-		Connection dbCon = null;
-		
-		try {
-			
-			dbCon = DriverManager.getConnection(jdbcUrl, user, password);
-			
-			assertThat(dbCon).isNotNull();
-		}
-		catch(SQLException sqle) {
-			
-			sqle.printStackTrace();
-		}
-		finally {
-			dbCon.close();
-		}
-	}
+	
 	
 	@Test
 	public void saveEmployeeToDBTest() {

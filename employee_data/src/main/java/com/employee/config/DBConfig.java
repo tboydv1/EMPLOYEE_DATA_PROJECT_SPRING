@@ -18,7 +18,7 @@ public class DBConfig {
 	private Environment env;
 	
 	
-	@Bean
+	@Bean(name="testDataSource")
 	public ComboPooledDataSource testDataSource() throws PropertyVetoException {
 		
 		ComboPooledDataSource dataSource = new ComboPooledDataSource();
@@ -26,7 +26,6 @@ public class DBConfig {
 		dataSource.setUser(env.getProperty("test.user"));
 		dataSource.setPassword(env.getProperty("test.password"));
 		dataSource.setDriverClass(env.getProperty("test.driver"));
-		
 		
 		return dataSource;
 	}
