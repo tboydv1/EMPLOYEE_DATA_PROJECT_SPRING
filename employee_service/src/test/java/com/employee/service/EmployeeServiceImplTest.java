@@ -7,7 +7,10 @@ import static org.mockito.ArgumentMatchers.isA;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
+import java.util.List;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -82,6 +85,17 @@ public class EmployeeServiceImplTest {
 		verify(employeeDaoImpl, times(1)).getByEmail("test@mail.com");
 	}
 	
+	@Test
+	public void findAllEmployeesTest() {
+		
+		List<Employee> employees = null;
+		
+		when(employeeDaoImpl.findAll()).thenReturn(employees);
+		
+		employeeDaoImpl.findAll();
+		
+		verify(employeeDaoImpl, times(1)).findAll();
+	}
 	
 	
 	

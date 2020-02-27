@@ -1,6 +1,8 @@
 package com.employee.dao;
 
 
+import java.util.List;
+
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
@@ -61,6 +63,27 @@ public class EmployeeDaoImpl implements EmployeeDao {
 		}
 		
 		return employee;
+	}
+
+	@Override
+	public List<Employee> findAll() {
+		
+		Session currentSession = sessionFactory.getCurrentSession();
+		
+		Query<Employee> query = currentSession.createQuery("From Employee", Employee.class);
+		
+		List<Employee> resultList = null;
+		
+		try {
+			
+			resultList = query.getResultList();
+			
+		}
+		catch(RuntimeException e){
+			
+		}
+		
+		return resultList;
 	}
 	
 	
